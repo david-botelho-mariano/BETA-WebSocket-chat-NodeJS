@@ -1,28 +1,56 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+	<head>
+		<title>Chat em nodeJS</title>
+	</head>
+
+	<body>
+
+  	<center>
+
+    	<h1>Testando WebSocket em NodeJS</h1>
+  		<h3>Insira seu nome: <input id="nome" type="text"/></h3>
+
+  		<br></br>
+    	
+    	<h3>Escreva sua mensagem</h3>
+
+	    <form action="">
+	      <input id="mensagem" autocomplete="off" /><button>Enviar</button>
+	    </form>
+
+	    
+
+
+      <table id="conversas-chat">
+
+        <tr>
+          <th><h4>Sala de chat:</h4></th>
+        </tr>
+
+      </table>
+
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
     <script>
+    	
       $(function () {
         var socket = io();
         $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          return false;
+        	socket.emit('chat message', $('#nome').val() +": " + $('#mensagem').val());
+        	$('#mensagem').val('');
+        	return false;
         });
         socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
-          window.scrollTo(0, document.body.scrollHeight);
+        	$('#conversas-chat').append("<tr><td>" + msg + "</td></tr>");
+        	window.scrollTo(0, document.body.scrollHeight);
         });
       });
+
     </script>
+
+    </center>
+
   </body>
 </html>
